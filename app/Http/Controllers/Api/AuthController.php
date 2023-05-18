@@ -19,6 +19,7 @@ class AuthController extends Controller
             'email' => 'required|email:rfc,dns|unique:users',
             'username' => 'required|unique:users',
             'password' => 'required',
+            'role' => 'required'
         ]); //rule validasi input saat register
 
         if($validate->fails())
@@ -41,7 +42,7 @@ class AuthController extends Controller
 
         $validate = Validator::make($loginData, [
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         if($validate->fails())

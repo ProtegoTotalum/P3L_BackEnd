@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\InstrukturResource;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 
 class InstrukturController extends Controller
@@ -31,11 +32,12 @@ class InstrukturController extends Controller
     }
 
     public function store(Request $request){
+
         $validator = Validator::make($request->all(), [
             'nama_instruktur' => 'required',
-            'email_instruktur' => 'required',
+            'email_instruktur' => 'required|email:rfc,dns',
             'nomor_telepon_instruktur' => 'required',
-            'username_instruktur' => 'required',
+            'username_instruktur' => 'required|unique:users,username',
             'password_instruktur' => 'required',
             'jumlah_keterlambatan_instruktur' => 'required'
         ]);
@@ -56,7 +58,8 @@ class InstrukturController extends Controller
         $user->name = $instruktur->nama_instruktur;
         $user->email = $instruktur->email_instruktur;
         $user->username = $instruktur->username_instruktur;
-        $user->password = $instruktur->password_instruktur;
+        $user['password'] = bcrypt($instruktur->password_instruktur); //enkripsi password
+        $user->role = "instruktur";
         $user->save();
         $iduser = $user->id;
                 

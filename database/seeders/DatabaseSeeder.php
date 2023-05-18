@@ -11,6 +11,7 @@ use App\Models\Member;
 use App\Models\Pegawai;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,15 +22,79 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::create([
+            'name' => 'Rani',
+            'email' => 'emailp3lgray@gmail.com',
+            'email_verified_at' => now(),
+            'username' => 'Rani',
+            'password' => bcrypt('123'),
+            'role' => 'kasir',
+            ],
+        );
+
+        User::create([
+            'name' => 'Andi',
+            'email' => 'emailp3lgray2@gmail.com',
+            'email_verified_at' => now(),
+            'username' => 'andi',
+            'password' => bcrypt('123'),
+            'role' => 'mo',
+            ],
+        );
+
+        User::create([
+            'name' => 'Gray',
+            'email' => 'grayfien2002@gmail.com',
+            'email_verified_at' => now(),
+            'username' => 'gray',
+            'password' => bcrypt('123'),
+            'role' => 'admin',
+            ],
+        );
+
+        Pegawai::create([
+            'id_user' => '1',
+            'nama_pegawai' => 'Rani Remi',
+            'nama_jabatan_pegawai' => 'Kasir',
+            'nomor_telepon_pegawai' => '0123456789',
+        ]);
+        
+        Pegawai::create([
+            'id_user' => '2',
+            'nama_pegawai' => 'Andi Gunawan',
+            'nama_jabatan_pegawai' => 'Manager Operasionam',
+            'nomor_telepon_pegawai' => '987654321',
+        ]); 
+
+        Pegawai::create([
+            'id_user' => '3',
+            'nama_pegawai' => 'Grey',
+            'nama_jabatan_pegawai' => 'Admin',
+            'nomor_telepon_pegawai' => '08123456789',
+        ]); 
+
         //Instruktur
-        Instruktur::create([
+        $instruktur = Instruktur::create([
             'nama_instruktur' => 'Hobby',
-            'email_instruktur' => 'hobby@gmail.com',
+            'email_instruktur' => 'emailp3lgray3@gmail.com',
             'nomor_telepon_instruktur' => '080012345678',
             'username_instruktur' => 'hobby',
             'password_instruktur' => 'hobby',
             'jumlah_keterlambatan_instruktur' => '2'
         ]);  
+
+        $user = new User();
+        $user->name = $instruktur->nama_instruktur;
+        $user->email = $instruktur->email_instruktur;
+        $user->username = $instruktur->username_instruktur;
+        $user->password = $instruktur->password_instruktur;
+        $user->role = 'instruktur';
+        $user->password = bcrypt($instruktur->password_instruktur);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $instruktur->id_user = $user->id;
+        $instruktur->save();
 
         Instruktur::create([
             'nama_instruktur' => 'Jenni',
@@ -88,9 +153,9 @@ class DatabaseSeeder extends Seeder
             'bonus_deposit' => '3',
         ]);
 
-        Member::create([
+        $member = Member::create([
             'nama_member' => 'Jett',
-            'email_member' => 'jett@gmail.com',
+            'email_member' => 'halohalo2721@gmail.com',
             'nomor_telepon_member' => '1234567890',
             'tanggal_lahir_member' => '25-07-1997',
             'alamat_member' => 'Jl. Babarsari',
@@ -99,6 +164,19 @@ class DatabaseSeeder extends Seeder
             'username_member' => 'jett',
             'password_member' => 'jett',
         ]);  
+
+        $user = new User();
+        $user->name = $member->nama_member;
+        $user->email = $member->email_member;
+        $user->username = $member->username_member;
+        $user->password = $member->password_member;
+        $user->role = 'member';
+        $user->password = bcrypt($member->password_member);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $member->id_user = $user->id;
+        $member->save();
 
         Member::create([
             'nama_member' => 'Sage',
@@ -123,54 +201,6 @@ class DatabaseSeeder extends Seeder
             'username_member' => 'viper',
             'password_member' => 'viper',
         ]);  
-
-        User::create([
-            'name' => 'Rani',
-            'email' => 'emailp3lgray@gmail.com',
-            'email_verified_at' => now(),
-            'username' => 'kasir',
-            'password' => bcrypt('123'),
-            ],
-        );
-
-        User::create([
-            'name' => 'Andi',
-            'email' => 'emailp3lgray2@gmail.com',
-            'email_verified_at' => now(),
-            'username' => 'mo',
-            'password' => bcrypt('123'),
-            ],
-        );
-
-        User::create([
-            'name' => 'Gray',
-            'email' => 'grayfien2002@gmail.com',
-            'email_verified_at' => now(),
-            'username' => 'admin',
-            'password' => bcrypt('123'),
-            ],
-        );
-
-        Pegawai::create([
-            'id_user' => '1',
-            'nama_pegawai' => 'Rani Remi',
-            'nama_jabatan_pegawai' => 'Kasir',
-            'nomor_telepon_pegawai' => '0123456789',
-        ]);
-        
-        Pegawai::create([
-            'id_user' => '2',
-            'nama_pegawai' => 'Andi Gunawan',
-            'nama_jabatan_pegawai' => 'Manager Operasionam',
-            'nomor_telepon_pegawai' => '987654321',
-        ]); 
-
-        Pegawai::create([
-            'id_user' => '3',
-            'nama_pegawai' => 'Grey',
-            'nama_jabatan_pegawai' => 'Admin',
-            'nomor_telepon_pegawai' => '08123456789',
-        ]); 
 
         JadwalUmum::create([
             'id_instruktur' => '1',

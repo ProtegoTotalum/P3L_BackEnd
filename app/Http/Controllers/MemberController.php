@@ -33,13 +33,13 @@ class MemberController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'nama_member' => 'required',
-            'email_member' => 'required',
+            'email_member' => 'required|email:rfc,dns',
             'nomor_telepon_member' => 'required',
             'tanggal_lahir_member' => 'required',
             'alamat_member' => 'required',
             'sisa_deposit_reguler' => 'required',
             'status_member' => 'required',
-            'username_member' => 'required',
+            'username_member' => 'required|unique:users,username',
             'password_member' => 'required',
         ]);
 
@@ -65,6 +65,8 @@ class MemberController extends Controller
         $user->email = $member->email_member;
         $user->username = $member->username_member;
         $user->password = $member->password_member;
+        $user->role = "member";
+        $user['password'] = bcrypt($member->password_member); //enkripsi password
         $user->save();
         $iduser = $user->id;
         
