@@ -69,6 +69,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            'id_user_login' => 'required',
             'name' => 'required|max:60',
             'email' => 'required|email:rfc,dns|unique:users',
             'username' => 'required|unique:users',
@@ -80,6 +81,7 @@ class UserController extends Controller
 
         $user = User::find($id);
         $user->update([
+            'id_user_login' => $request->id_user_login,
             'name' => $request->name,
             'email' => $request->email, 
             'username' => $request->username, 

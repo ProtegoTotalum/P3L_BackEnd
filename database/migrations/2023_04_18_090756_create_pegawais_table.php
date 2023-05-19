@@ -15,11 +15,14 @@ return new class extends Migration
     {
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id('id');
-            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_user')->nullable();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->string('nama_pegawai');
+            $table->string('email_pegawai');
             $table->string('nama_jabatan_pegawai');
             $table->string('nomor_telepon_pegawai');
+            $table->string('username_pegawai');
+            $table->string('password_pegawai');
             $table->timestamps();
         });
     }

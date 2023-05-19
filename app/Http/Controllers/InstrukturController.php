@@ -55,6 +55,7 @@ class InstrukturController extends Controller
         ]);
         //Create data new user
         $user = new User();
+        $user->id_user_login = $instruktur->id;
         $user->name = $instruktur->nama_instruktur;
         $user->email = $instruktur->email_instruktur;
         $user->username = $instruktur->username_instruktur;

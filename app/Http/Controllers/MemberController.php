@@ -61,6 +61,7 @@ class MemberController extends Controller
 
         //Create data new user
         $user = new User();
+        $user->id_user_login = $member->id;
         $user->name = $member->nama_member;
         $user->email = $member->email_member;
         $user->username = $member->username_member;
@@ -138,7 +139,7 @@ class MemberController extends Controller
             'alamat_member' => 'required',
             'sisa_deposit_reguler' => 'required',
             'status_member' => 'required',
-            'username_member' => 'required',
+            'username_member' => 'required|unique:users,username',
             'password_member' => 'required',
             ]);
         if ($validator->fails()) {

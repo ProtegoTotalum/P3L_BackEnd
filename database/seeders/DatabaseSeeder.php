@@ -22,56 +22,74 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Rani',
-            'email' => 'emailp3lgray@gmail.com',
-            'email_verified_at' => now(),
-            'username' => 'Rani',
-            'password' => bcrypt('123'),
-            'role' => 'kasir',
-            ],
-        );
-
-        User::create([
-            'name' => 'Andi',
-            'email' => 'emailp3lgray2@gmail.com',
-            'email_verified_at' => now(),
-            'username' => 'andi',
-            'password' => bcrypt('123'),
-            'role' => 'mo',
-            ],
-        );
-
-        User::create([
-            'name' => 'Gray',
-            'email' => 'grayfien2002@gmail.com',
-            'email_verified_at' => now(),
-            'username' => 'gray',
-            'password' => bcrypt('123'),
-            'role' => 'admin',
-            ],
-        );
-
-        Pegawai::create([
-            'id_user' => '1',
+        $pegawai = Pegawai::create([
             'nama_pegawai' => 'Rani Remi',
-            'nama_jabatan_pegawai' => 'Kasir',
+            'email_pegawai' => 'emailp3lgray@gmail.com',
+            'nama_jabatan_pegawai' => 'kasir',
             'nomor_telepon_pegawai' => '0123456789',
+            'username_pegawai' => 'rani',
+            'password_pegawai' => '123',
         ]);
-        
-        Pegawai::create([
-            'id_user' => '2',
-            'nama_pegawai' => 'Andi Gunawan',
-            'nama_jabatan_pegawai' => 'Manager Operasionam',
-            'nomor_telepon_pegawai' => '987654321',
-        ]); 
 
-        Pegawai::create([
-            'id_user' => '3',
-            'nama_pegawai' => 'Grey',
-            'nama_jabatan_pegawai' => 'Admin',
-            'nomor_telepon_pegawai' => '08123456789',
-        ]); 
+        $user = new User();
+        $user->id_user_login = $pegawai->id;
+        $user->name = $pegawai->nama_pegawai;
+        $user->email = $pegawai->email_pegawai;
+        $user->username = $pegawai->username_pegawai;
+        $user->password = $pegawai->password_pegawai;
+        $user->role = $pegawai->nama_jabatan_pegawai;
+        $user->password = bcrypt($pegawai->password_pegawai);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $pegawai->id_user = $user->id;
+        $pegawai->save();
+        
+        $pegawai2 = Pegawai::create([
+            'nama_pegawai' => 'Andi',
+            'email_pegawai' => 'emailp3lgray2@gmail.com',
+            'nama_jabatan_pegawai' => 'mo',
+            'nomor_telepon_pegawai' => '987654321',
+            'username_pegawai' => 'andi',
+            'password_pegawai' => '123',
+        ]);
+
+        $user = new User();
+        $user->id_user_login = $pegawai2->id;
+        $user->name = $pegawai2->nama_pegawai;
+        $user->email = $pegawai2->email_pegawai;
+        $user->username = $pegawai2->username_pegawai;
+        $user->password = $pegawai2->password_pegawai;
+        $user->role = $pegawai2->nama_jabatan_pegawai;
+        $user->password = bcrypt($pegawai2->password_pegawai);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $pegawai2->id_user = $user->id;
+        $pegawai2->save();
+
+        $pegawai3 = Pegawai::create([
+            'nama_pegawai' => 'Grayfien Halim',
+            'email_pegawai' => 'grayfien2002@gmail.com',
+            'nama_jabatan_pegawai' => 'admin',
+            'nomor_telepon_pegawai' => '0123456789',
+            'username_pegawai' => 'admin',
+            'password_pegawai' => '123',
+        ]);
+
+        $user = new User();
+        $user->id_user_login = $pegawai3->id;
+        $user->name = $pegawai3->nama_pegawai;
+        $user->email = $pegawai3->email_pegawai;
+        $user->username = $pegawai3->username_pegawai;
+        $user->password = $pegawai3->password_pegawai;
+        $user->role = $pegawai3->nama_jabatan_pegawai;
+        $user->password = bcrypt($pegawai3->password_pegawai);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $pegawai3->id_user = $user->id;
+        $pegawai3->save();
 
         //Instruktur
         $instruktur = Instruktur::create([
@@ -84,6 +102,7 @@ class DatabaseSeeder extends Seeder
         ]);  
 
         $user = new User();
+        $user->id_user_login = $instruktur->id;
         $user->name = $instruktur->nama_instruktur;
         $user->email = $instruktur->email_instruktur;
         $user->username = $instruktur->username_instruktur;
@@ -166,6 +185,7 @@ class DatabaseSeeder extends Seeder
         ]);  
 
         $user = new User();
+        $user->id_user_login = $member->id;
         $user->name = $member->nama_member;
         $user->email = $member->email_member;
         $user->username = $member->username_member;

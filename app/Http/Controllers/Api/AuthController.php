@@ -15,6 +15,7 @@ class AuthController extends Controller
         $registrationData = $request->all(); //mengambil seluruh data input dan menyimpannya dalam variable registrationData
 
         $validate = Validator::make($registrationData, [
+            'id_user_login' => 'required',
             'name' => 'required|max:60',
             'email' => 'required|email:rfc,dns|unique:users',
             'username' => 'required|unique:users',

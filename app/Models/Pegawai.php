@@ -13,8 +13,11 @@ class Pegawai extends Model
     protected $fillable = [
         'id_user',
         'nama_pegawai',
+        'email_pegawai',
         'nama_jabatan_pegawai',
         'nomor_telepon_pegawai',
+        'username_pegawai',
+        'password_pegawai',
     ];
 
      public function getCreatedAtAttribute(){
