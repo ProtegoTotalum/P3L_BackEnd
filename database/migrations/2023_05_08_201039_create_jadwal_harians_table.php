@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_jadwal_umum');
             $table->foreign('id_jadwal_umum')->references('id')->on('jadwal_umums')->onDelete('cascade');
             $table->string('status_jadwal_harian');
+            $table->integer('kapasitas_kelas');
             $table->timestamps();
         });
     }

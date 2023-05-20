@@ -82,4 +82,26 @@ class AuthController extends Controller
             'message' => 'User Logged Out Successfully',
         ],200);
     }
+
+    // public function forget(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'username' => 'required|unique:users',
+    //         'password' => 'required'
+    //         ]);
+    //     if ($validator->fails()) {
+    //         return response()->json($validator->errors(), 422);
+    //     }
+    //     $username = $request->username;
+    //     $password = $request->password;
+    //     $user = User::where('username', $username)
+    //         ->where('password', $password)
+    //         ->value('users.id');
+        
+    //     if(isset($user)){
+    //         $user->update([
+    //             'password' => $request->password
+    //         ]);
+    //     }
+    // }
 }

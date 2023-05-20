@@ -61,7 +61,8 @@ class JadwalHarianController extends Controller
                         'tanggal_jadwal_harian' =>$date->toDateString(),
                         'status_jadwal_harian' => 'Masuk',
                         'id_jadwal_umum' =>$jadwalumum->id,
-                        'id_instruktur' =>$jadwalumum->id_instruktur,   
+                        'id_instruktur' =>$jadwalumum->id_instruktur,
+                        'kapasitas_kelas' => '10'   
                     ]);
                 }
             }

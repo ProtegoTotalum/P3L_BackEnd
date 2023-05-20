@@ -29,7 +29,7 @@ Route::get('email/resend', [EmailVerificationController::class, 'resend'])->name
 Route::put('reset/{id}', 'App\Http\Controllers\MemberController@resetPassword');
 
 
-
+Route::apiResource('/bookingkelas', App\Http\Controllers\BookingKelasController::class);
 Route::apiResource('/depositkelas', App\Http\Controllers\DepositKelasController::class);
 Route::apiResource('/instruktur', App\Http\Controllers\InstrukturController::class);
 Route::apiResource('/transaksireguler', App\Http\Controllers\TransaksiDepositRegulerController::class);

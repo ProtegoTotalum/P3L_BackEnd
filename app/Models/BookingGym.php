@@ -6,17 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class JadwalHarian extends Model
+class BookingGym extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'id_instruktur',
-        'id_jadwal_umum',
-        'tanggal_jadwal_harian',
-        'status_jadwal_harian',
-        'kapasitas_kelas'
-    ]; 
+    protected $primaryKey = 'nomor_booking_gym';
+
+    protected $fillable =[
+        'nomor_booking_gym',
+        'id_member',
+        'tanggal_booking_gym',
+        'jam_sesi_booking_gym',
+        'kapasitas_gym',
+        'jam_presensi_gym',
+    ];
+
+    protected $casts = [
+        'nomor_booking_gym' => 'string'
+    ];
 
     public function getCreatedAtAttribute(){
         if(!is_null($this->attributes['created_at'])){
@@ -30,14 +37,7 @@ class JadwalHarian extends Model
         }
     }
 
-    public function instruktur()
-    {
-        return $this->belongsTo(Instruktur::class, 'id_instruktur', 'id');
-
-    }
-    public function jadwalumum()
-    {
-        return $this->belongsTo(JadwalUmum::class, 'id_jadwal_umum', 'id');
-
+    public function member(){
+        return $this->belongsTo(member::class, 'id_member', 'id');
     }
 }
