@@ -16,6 +16,7 @@ class BookingGym extends Model
         'nomor_booking_gym',
         'id_member',
         'tanggal_booking_gym',
+        'tanggal_pelaksanaan_gym',
         'jam_sesi_booking_gym',
         'kapasitas_gym',
         'jam_presensi_gym',

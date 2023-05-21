@@ -29,6 +29,7 @@ Route::get('email/resend', [EmailVerificationController::class, 'resend'])->name
 Route::put('reset/{id}', 'App\Http\Controllers\MemberController@resetPassword');
 
 
+Route::apiResource('/bookinggym', App\Http\Controllers\BookingGymController::class);
 Route::apiResource('/bookingkelas', App\Http\Controllers\BookingKelasController::class);
 Route::apiResource('/depositkelas', App\Http\Controllers\DepositKelasController::class);
 Route::apiResource('/instruktur', App\Http\Controllers\InstrukturController::class);
@@ -43,7 +44,9 @@ Route::apiResource('/promo', App\Http\Controllers\PromoController::class);
 Route::apiResource('/jadwalumum', App\Http\Controllers\JadwalUmumController::class);
 Route::apiResource('/jadwalharian', App\Http\Controllers\JadwalHarianController::class);
 Route::apiResource('/ijin', App\Http\Controllers\IjinInstrukturController::class);
+Route::apiResource('/presensi', App\Http\Controllers\PresensiInstrukturController::class);
 
+Route::get('/createpresensiinstruktur', [App\Http\Controllers\PresensiInstrukturController::class, 'createPresensiInstruktur']);
 Route::get('/masaberlakumember', [App\Http\Controllers\SistemController::class, 'getMasaBerlakuMember']);
 Route::get('/deaktivasimember', [App\Http\Controllers\SistemController::class, 'deaktivasiMember']);
 Route::get('/masaberlakudepositkelas', [App\Http\Controllers\SistemController::class, 'getMasaBerlakuDepositKelas']);

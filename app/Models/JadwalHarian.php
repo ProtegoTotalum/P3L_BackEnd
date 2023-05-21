@@ -40,4 +40,9 @@ class JadwalHarian extends Model
         return $this->belongsTo(JadwalUmum::class, 'id_jadwal_umum', 'id');
 
     }
+
+    public function presensiInstrukturs()
+    {
+        return $this->hasMany(PresensiInstruktur::class, 'id_jadwal_harian');
+    }
 }

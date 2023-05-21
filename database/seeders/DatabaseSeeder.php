@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
             'nomor_telepon_instruktur' => '080012345678',
             'username_instruktur' => 'hobby',
             'password_instruktur' => 'hobby',
-            'jumlah_keterlambatan_instruktur' => '2'
+            'jumlah_keterlambatan_instruktur' => '0'
         ]);  
 
         $user = new User();
@@ -130,7 +130,7 @@ class DatabaseSeeder extends Seeder
             'nomor_telepon_instruktur' => '0987654321',
             'username_instruktur' => 'rose',
             'password_instruktur' => 'rose',
-            'jumlah_keterlambatan_instruktur' => '1'
+            'jumlah_keterlambatan_instruktur' => '0'
         ]);  
         
         Kelas::create([

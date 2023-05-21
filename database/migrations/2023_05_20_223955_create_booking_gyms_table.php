@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_member');
             $table->foreign('id_member')->references('id')->on('members')->onDelete('cascade');
             $table->dateTime('tanggal_booking_gym');
+            $table->string('tanggal_pelaksanaan_gym');
             $table->string('jam_sesi_booking_gym');
             $table->integer('kapasitas_gym')->nullable();
             $table->time('jam_presensi_gym')->nullable();

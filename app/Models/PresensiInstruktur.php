@@ -6,18 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Instruktur extends Model
+class PresensiInstruktur extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id_user',
-        'nama_instruktur',
-        'email_instruktur',
-        'nomor_telepon_instruktur',
-        'username_instruktur',
-        'password_instruktur',
-        'jumlah_keterlambatan_instruktur',
+        'id_instruktur',
+        'id_jadwal_harian',
+        'jam_mulai_kelas',
+        'jam_selesai_kelas',
+        'status_presensi',
     ];
 
     public function getCreatedAtAttribute(){
@@ -32,11 +30,11 @@ class Instruktur extends Model
         }
     }
 
-    public function user(){
-        return $this->belongsTo(User::class, 'id_user', 'id');
+    public function instruktur(){
+        return $this->belongsTo(Instruktur::class, 'id_instruktur', 'id');
     }
 
-    public function presensiInstrukturs(){
-        return $this->hasMany(PresensiInstruktur::class, 'id_instruktur');
+    public function jadwalharian(){
+        return $this->belongsTo(JadwalHarian::class, 'id_jadwal_harian', 'id');
     }
 }

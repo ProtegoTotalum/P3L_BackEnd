@@ -9,6 +9,7 @@ use App\Models\JadwalHarian;
 use App\Models\Instruktur;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\IjinInstrukturResource;
+use App\Models\PresensiInstruktur;
 use Illuminate\Support\Facades\DB;
 
 class IjinInstrukturController extends Controller
@@ -74,6 +75,15 @@ class IjinInstrukturController extends Controller
                 $jadwal_harian->update([
                     'id_instruktur' => $ijin->id_instruktur_pengganti,
                     'status_jadwal_harian' => $nama_instruktur . ' digantikan dengan ' . $pengganti
+                ]);
+
+                $presensi = PresensiInstruktur::where('id_jadwal_harian', $harian)
+                ->value('presensi_instrukturs.id');
+
+                $presensi_instruktur = PresensiInstruktur::find($presensi);
+
+                $presensi_instruktur->update([
+                    'id_instruktur' => $ijin->id_instruktur_pengganti,
                 ]);
 
                 // $update = JadwalHarian::where('id', $jadwal_harian)->update([

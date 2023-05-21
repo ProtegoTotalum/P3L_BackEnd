@@ -70,10 +70,10 @@ class BookingKelasController extends Controller
                                 'tanggal_booking_kelas' => date('Y-m-d H:i:s', strtotime('now')),
                                 'metode_pembayaran_booking_kelas' => $metode_pembayaran,
                             ]);
-                            //Update sisa deposit member 
-                            $before = $member->sisa_deposit_reguler;
-                            $member->sisa_deposit_reguler = $before - $kelas->harga_kelas;
-                            $member->save();
+                            // //Update sisa deposit member 
+                            // $before = $member->sisa_deposit_reguler;
+                            // $member->sisa_deposit_reguler = $before - $kelas->harga_kelas;
+                            // $member->save();
                             //Update sisa kapasitas kelas di jadwal harian
                             $min = $harian->kapasitas_kelas - 1;
                             $harian->kapasitas_kelas = $min;
@@ -106,10 +106,10 @@ class BookingKelasController extends Controller
                                 'tanggal_booking_kelas' => date('Y-m-d H:i:s', strtotime('now')),
                                 'metode_pembayaran_booking_kelas' => $metode_pembayaran,
                             ]);
-                            //Update sisa deposit kelas member
-                            $minDK = $deposit->sisa_deposit_kelas -1;
-                            $deposit->sisa_deposit_kelas = $minDK;
-                            $deposit->save();
+                            // //Update sisa deposit kelas member
+                            // $minDK = $deposit->sisa_deposit_kelas -1;
+                            // $deposit->sisa_deposit_kelas = $minDK;
+                            // $deposit->save();
                             //Update sisa kapasitas kelas di jadwal harian
                             $min = $harian->kapasitas_kelas - 1;
                             $harian->kapasitas_kelas = $min;
