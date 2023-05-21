@@ -37,17 +37,23 @@ class PresensiInstrukturController extends Controller
         if($jadwalHarians == null){
             return response()->json(['message' => 'Jadwal Harian Belum Digenerate']);
         }else{
-            foreach ($jadwalHarians as $jadwalHarian) {
-                // Create new PresensiInstruktur record
-               $presensi = PresensiInstruktur::create([
-                    'id_instruktur' => $jadwalHarian->id_instruktur,
-                    'id_jadwal_harian' => $jadwalHarian->id,
-                    'jam_mulai' => null, 
-                    'jam_selesai' => null, 
-                ]);
+            $cek = PresensiInstruktur::count();
+            if($cek == 0){
+                foreach ($jadwalHarians as $jadwalHarian) {
+                    // Create new PresensiInstruktur record
+                   $presensi = PresensiInstruktur::create([
+                        'id_instruktur' => $jadwalHarian->id_instruktur,
+                        'id_jadwal_harian' => $jadwalHarian->id,
+                        'jam_mulai_kelas' => null, 
+                        'jam_selesai_kelas' => null, 
+                    ]);
+                }
+        
+                return response()->json(['message' => 'Berhasil Melakukan Generate Presensi Instruktur']);
+            }else{
+                return response()->json([
+                    'message'=> 'Presensi Instruktur Sudah Di Generate',],400);
             }
-    
-            return response()->json(['message' => 'Berhasil Melakukan Generate Presensi Instruktur']);
         }
     }
 
