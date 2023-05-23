@@ -16,8 +16,22 @@ class BookingGymController extends Controller
     public function index()
     {
         //get booking gym
-        $bookgym =  BookingGym::with(['member'])->get();
+        //$bookgym =  BookingGym::with(['member'])->get();
         //render view with posts
+        $bookgym = DB::table('booking_gyms')
+        ->join('members', 'booking_gyms.id_member', '=', 'members.id')
+        ->select(
+            'booking_gyms.nomor_booking_gym as nomor_booking_gym',
+            'booking_gyms.id_member as id_member',
+            'members.nomor_member as nomor_member',
+            'members.nama_member as nama_member',
+            'booking_gyms.tanggal_booking_gym as tanggal_booking_gym',
+            'booking_gyms.tanggal_pelaksanaan_gym as tanggal_pelaksanaan_gym',
+            'booking_gyms.jam_sesi_booking_gym as jam_sesi_booking_gym',
+            'booking_gyms.kapasitas_gym as kapasitas-gym',
+            'booking_gyms.jam_presensi_gym as jam_presensi_gym',
+        )
+        ->get();
         if(count($bookgym) > 0){
             return new BookingGymResource(true, 'List Data Booking Gym',
             $bookgym); // return data semua booking gym dalam bentuk json
@@ -58,7 +72,10 @@ class BookingGymController extends Controller
 
                         $booking = new BookingGym();
                         $booking->id_member = $request->id_member;
-                        $booking->tanggal_booking_gym = Carbon::now();
+                        $currentDateTime = Carbon::now();
+                        $tanggal_booking_gym = $currentDateTime->format('Y-m-d H:i');
+                        $booking->tanggal_booking_gym = $tanggal_booking_gym;
+
                         $booking->tanggal_pelaksanaan_gym = $pelaksanaan;
                         $booking->jam_sesi_booking_gym = $request->jam_sesi_booking_gym;
                         // $booking->kapasitas_gym = $kapasitas;
@@ -75,7 +92,10 @@ class BookingGymController extends Controller
                                 $booking->kapasitas_gym = $newKapasitas;
                                 $booking->save();
                                 
-                                return new BookingGymResource(true, 'Booking Gym Berhasil Ditambahkan', $booking);
+                                return response([
+                                    'message'=> 'Booking Gym Berhasil',
+                                    'data' => ['booking_gym' => $booking, 'nomor_booking_gym' => BookingGym::latest()->first()->nomor_booking_gym, 'nama_member' => $member->nama_member, 'nomor_member' => $member->nomor_member,],
+                                ]);
                             } else {
                                 return response(
                                     ['message'=> 'Maaf Gym Untuk Sesi Ini Sudah Penuh',] , 400);
@@ -107,20 +127,29 @@ class BookingGymController extends Controller
         }
     }
 
-    private function incrementKapasitasGym($jamSesi, $tanggal){
-        DB::table('booking_gyms')
-            ->where('jam_sesi_booking_gym', $jamSesi)
-            ->where('tanggal_pelaksanaan_gym', $tanggal)
-            ->increment('kapasitas_gym');
+    public function update($id)
+    {
+        $gym = BookingGym::find($id);
+        $gym->jam_presensi_gym = date('H:i:s', strtotime('now'));
+        $gym->update();
+        return new BookingGymResource(true, 'Berhasil Presensi Gym', $gym);
+
     }
 
-    private function isGymFull($jamSesi, $tanggal)
-    {
-        $kapasitasGym = DB::table('booking_gyms')
-            ->where('jam_sesi', $jamSesi)
-            ->where('tanggal', $tanggal)
-            ->sum('kapasitas_gym');
+    // private function incrementKapasitasGym($jamSesi, $tanggal){
+    //     DB::table('booking_gyms')
+    //         ->where('jam_sesi_booking_gym', $jamSesi)
+    //         ->where('tanggal_pelaksanaan_gym', $tanggal)
+    //         ->increment('kapasitas_gym');
+    // }
+
+    // private function isGymFull($jamSesi, $tanggal)
+    // {
+    //     $kapasitasGym = DB::table('booking_gyms')
+    //         ->where('jam_sesi', $jamSesi)
+    //         ->where('tanggal', $tanggal)
+    //         ->sum('kapasitas_gym');
             
-        return $kapasitasGym >= 10;
-    }
+    //     return $kapasitasGym >= 10;
+    // }
 }

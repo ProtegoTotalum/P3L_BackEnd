@@ -28,6 +28,11 @@ Route::get('email/resend', [EmailVerificationController::class, 'resend'])->name
 
 Route::put('reset/{id}', 'App\Http\Controllers\MemberController@resetPassword');
 
+Route::get('/getpresensi/{id}', 'App\Http\Controllers\PresensiInstrukturController@show');
+Route::get('getpresensi', 'App\Http\Controllers\PresensiInstrukturController@index');
+Route::get('/jammulai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamMulai']);
+Route::get('/jamselesai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamSelesai']);
+
 
 Route::apiResource('/bookinggym', App\Http\Controllers\BookingGymController::class);
 Route::apiResource('/bookingkelas', App\Http\Controllers\BookingKelasController::class);
