@@ -21,7 +21,8 @@ class JadwalHarianController extends Controller
         'instrukturs.nama_instruktur as nama_instruktur', 
         'jadwal_harians.tanggal_jadwal_harian as tanggal_jadwal_harian' ,
         'jadwal_harians.status_jadwal_harian as status', 
-        'kelas.nama_kelas as nama_kelas', 
+        'kelas.nama_kelas as nama_kelas',
+        'kelas.harga_kelas as harga_kelas', 
         'jadwal_umums.hari as hari', 
         'jadwal_umums.jam as jam')
         ->get();

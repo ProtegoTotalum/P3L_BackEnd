@@ -30,6 +30,9 @@ Route::put('reset/{id}', 'App\Http\Controllers\MemberController@resetPassword');
 
 Route::get('/getpresensi/{id}', 'App\Http\Controllers\PresensiInstrukturController@show');
 Route::get('getpresensi', 'App\Http\Controllers\PresensiInstrukturController@index');
+Route::get('getjadwalharian', 'App\Http\Controllers\JadwalHarianController@index');
+Route::get('getmember/{id}', 'App\Http\Controllers\MemberController@show');
+Route::get('getdepositkelas/{id}', 'App\Http\Controllers\DepositKelasController@show');
 Route::get('/jammulai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamMulai']);
 Route::get('/jamselesai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamSelesai']);
 

@@ -198,7 +198,7 @@ class DatabaseSeeder extends Seeder
         $member->id_user = $user->id;
         $member->save();
 
-        Member::create([
+        $member2 = Member::create([
             'nama_member' => 'Sage',
             'email_member' => 'sage@gmail.com',
             'nomor_telepon_member' => '0987654321',
@@ -210,7 +210,21 @@ class DatabaseSeeder extends Seeder
             'password_member' => 'sage',
         ]);  
 
-        Member::create([
+        $user = new User();
+        $user->id_user_login = $member2->id;
+        $user->name = $member2->nama_member;
+        $user->email = $member2->email_member;
+        $user->username = $member2->username_member;
+        $user->password = $member2->password_member;
+        $user->role = 'member';
+        $user->password = bcrypt($member2->password_member);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $member2->id_user = $user->id;
+        $member2->save();
+
+        $member3 = Member::create([
             'nama_member' => 'Viper',
             'email_member' => 'viper@gmail.com',
             'nomor_telepon_member' => '123123123',
@@ -221,6 +235,20 @@ class DatabaseSeeder extends Seeder
             'username_member' => 'viper',
             'password_member' => 'viper',
         ]);  
+
+        $user = new User();
+        $user->id_user_login = $member3->id;
+        $user->name = $member3->nama_member;
+        $user->email = $member3->email_member;
+        $user->username = $member3->username_member;
+        $user->password = $member3->password_member;
+        $user->role = 'member';
+        $user->password = bcrypt($member3->password_member);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $member3->id_user = $user->id;
+        $member3->save();
 
         JadwalUmum::create([
             'id_instruktur' => '1',

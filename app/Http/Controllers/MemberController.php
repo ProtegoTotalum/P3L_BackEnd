@@ -116,10 +116,10 @@ class MemberController extends Controller
         if(!is_null($member)){
             $user= User::find($member->id_user);
             return response([
+                'status' => true,
                 'message' => 'Data Member Ditemukan',
-                'data' => $member,
-                'dataUser' => $user
-            ], 404);
+                'data' => [$member],
+            ], 200);
         }
 
         return response([
