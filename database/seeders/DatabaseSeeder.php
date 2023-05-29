@@ -115,7 +115,7 @@ class DatabaseSeeder extends Seeder
         $instruktur->id_user = $user->id;
         $instruktur->save();
 
-        Instruktur::create([
+        $instruktur2 = Instruktur::create([
             'nama_instruktur' => 'Jenni',
             'email_instruktur' => 'jenni@gmail.com',
             'nomor_telepon_instruktur' => '1234567890',
@@ -124,7 +124,21 @@ class DatabaseSeeder extends Seeder
             'jumlah_keterlambatan_instruktur' => '0'
         ]);  
 
-        Instruktur::create([
+        $user = new User();
+        $user->id_user_login = $instruktur2->id;
+        $user->name = $instruktur2->nama_instruktur;
+        $user->email = $instruktur2->email_instruktur;
+        $user->username = $instruktur2->username_instruktur;
+        $user->password = $instruktur2->password_instruktur;
+        $user->role = 'instruktur';
+        $user->password = bcrypt($instruktur2->password_instruktur);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $instruktur2->id_user = $user->id;
+        $instruktur2->save();
+
+        $instruktur3 = Instruktur::create([
             'nama_instruktur' => 'Rose',
             'email_instruktur' => 'rose@gmail.com',
             'nomor_telepon_instruktur' => '0987654321',
@@ -132,6 +146,20 @@ class DatabaseSeeder extends Seeder
             'password_instruktur' => 'rose',
             'jumlah_keterlambatan_instruktur' => '0'
         ]);  
+
+        $user = new User();
+        $user->id_user_login = $instruktur3->id;
+        $user->name = $instruktur3->nama_instruktur;
+        $user->email = $instruktur3->email_instruktur;
+        $user->username = $instruktur3->username_instruktur;
+        $user->password = $instruktur3->password_instruktur;
+        $user->role = 'instruktur';
+        $user->password = bcrypt($instruktur3->password_instruktur);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $instruktur3->id_user = $user->id;
+        $instruktur3->save();
         
         Kelas::create([
             'nama_kelas' => 'Pilates',

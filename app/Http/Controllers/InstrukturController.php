@@ -110,10 +110,10 @@ class InstrukturController extends Controller
         if(!is_null($instruktur)){
             $user= User::find($instruktur->id_user);
             return response([
+                'status' => true,
                 'message' => 'Data Instruktur Ditemukan',
-                'data' => $instruktur,
-                'dataUser' => $user
-            ], 404);
+                'data' => [$instruktur],
+            ], 200);
         }
 
         return response([

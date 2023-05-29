@@ -84,6 +84,7 @@ class IjinInstrukturController extends Controller
 
                 $presensi_instruktur->update([
                     'id_instruktur' => $ijin->id_instruktur_pengganti,
+                    'status_presensi' => "Ijin"
                 ]);
 
                 // $update = JadwalHarian::where('id', $jadwal_harian)->update([

@@ -32,9 +32,14 @@ Route::get('/getpresensi/{id}', 'App\Http\Controllers\PresensiInstrukturControll
 Route::get('getpresensi', 'App\Http\Controllers\PresensiInstrukturController@index');
 Route::get('getjadwalharian', 'App\Http\Controllers\JadwalHarianController@index');
 Route::get('getmember/{id}', 'App\Http\Controllers\MemberController@show');
+Route::get('getinstruktur/{id}', 'App\Http\Controllers\InstrukturController@show');
 Route::get('getdepositkelas/{id}', 'App\Http\Controllers\DepositKelasController@show');
 Route::get('/jammulai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamMulai']);
 Route::get('/jamselesai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamSelesai']);
+
+Route::get('/laporanaktivitasgym',[App\Http\Controllers\LaporanController::class, 'aktivitasGymBulanan']);
+Route::get('/laporanaktivitaskelas',[App\Http\Controllers\LaporanController::class, 'aktivitasKelasBulanan']);
+Route::get('/laporankinerjainstruktur',[App\Http\Controllers\LaporanController::class, 'kinerjaInstrukturBulanan']);
 
 
 Route::apiResource('/bookinggym', App\Http\Controllers\BookingGymController::class);

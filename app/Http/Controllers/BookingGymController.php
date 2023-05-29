@@ -131,6 +131,7 @@ class BookingGymController extends Controller
     {
         $gym = BookingGym::find($id);
         $gym->jam_presensi_gym = date('H:i:s', strtotime('now'));
+        $gym->status_presensi_gym = "Hadir";
         $gym->update();
         return new BookingGymResource(true, 'Berhasil Presensi Gym', $gym);
 
