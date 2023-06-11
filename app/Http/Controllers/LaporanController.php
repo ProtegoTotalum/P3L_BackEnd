@@ -22,7 +22,7 @@ class LaporanController extends Controller
 
         // Tanggal Cetak
         $tanggalCetak = Carbon::now()->format('Y-m-d');
-        $laporanGym = BookingGym::where('tanggal_pelaksanaan_gym', '<', $tanggalCetak)
+        $laporanGym = BookingGym::where('tanggal_pelaksanaan_gym', '<=', $tanggalCetak)
             ->where('status_presensi_gym', "Hadir")
             ->whereMonth('tanggal_pelaksanaan_gym', $bulan)
             ->get()
@@ -67,9 +67,10 @@ class LaporanController extends Controller
         ->select(
             'kelas.nama_kelas as nama_kelas',
             'instrukturs.nama_instruktur as nama_instruktur',
-            DB::raw('COUNT(DISTINCT booking_kelas.nomor_booking_kelas) AS jumlah_peserta_kelas'),
+            DB::raw('COUNT(DISTINCT CASE WHEN booking_kelas.jam_presensi_kelas IS NOT NULL THEN booking_kelas.nomor_booking_kelas END) AS jumlah_peserta_kelas'),
             DB::raw('COUNT(DISTINCT CASE WHEN jadwal_harians.status_jadwal_harian = "Libur" THEN jadwal_harians.id ELSE NULL END) AS jumlah_libur')
         )
+        // ->whereNotNull('booking_kelas.jam_presensi_kelas') 
         ->whereRaw('MONTH(jadwal_harians.tanggal_jadwal_harian) = ?', [$bulan])
         ->groupBy('kelas.nama_kelas', 'instrukturs.nama_instruktur')
         ->get();

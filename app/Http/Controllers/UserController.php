@@ -57,7 +57,7 @@ class UserController extends Controller
             return response([
                 'message' => 'Data User Ditemukan',
                 'data' => $user
-            ], 404);
+            ], 200);
         }
 
         return response([

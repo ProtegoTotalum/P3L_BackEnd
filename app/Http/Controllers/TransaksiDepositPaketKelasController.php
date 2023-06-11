@@ -89,7 +89,7 @@ class TransaksiDepositPaketKelasController extends Controller
                     'id_member'=> $id_member,
                     'id_promo' => $id_promo,
                     'id_kelas' => $id_kelas,
-                    'tanggal_deposit_paket_kelas' => date('Y-m-d H:i:s', strtotime('now')),
+                    'tanggal_deposit_paket_kelas' => date('Y-m-d H:i', strtotime('now')),
                     'nominal_deposit_paket_kelas' => $nominal_deposit_paket_kelas,
                     'nominal_uang_deposit_paket_kelas' => $nominal_uang_deposit_paket_kelas,
                     'bonus_deposit_paket_kelas' => $bonus_deposit_paket_kelas,
@@ -131,7 +131,7 @@ class TransaksiDepositPaketKelasController extends Controller
                 // }
                 return response([
                     'message'=> 'Transaksi Deposit Paket Kelas Berhasil',
-                    'data' => ['transaksi_deposit_paket_kelas' => $transaksipaketkelas, 'deposit_kelas' => $deposit, 'sisa_deposit_kelas' => $deposit->sisa_deposit_kelas, 'nomor_struk_transaksi_deposit_paket_kelas' => TransaksiDepositPaketKelas::latest()->first()->nomor_struk_transaksi_deposit_paket_kelas, 'nama_member' => $member->nama_member, 'nomor_member' => $member->nomor_member, 'nama_pegawai' => $pegawai->nama_pegawai],
+                    'data' => ['transaksi_deposit_paket_kelas' => $transaksipaketkelas, 'deposit_kelas' => $deposit, 'sisa_deposit_kelas' => $deposit->sisa_deposit_kelas, 'nomor_struk_transaksi_deposit_paket_kelas' => TransaksiDepositPaketKelas::latest()->first()->nomor_struk_transaksi_deposit_paket_kelas, 'nama_member' => $member->nama_member, 'nomor_member' => $member->nomor_member, 'nama_pegawai' => $pegawai->nama_pegawai, 'harga_kelas' => $kelas->harga_kelas, 'nama_kelas' => $kelas->nama_kelas, 'deskripsi_promo' => $promo->deskripsi_promo],
                     'total' => $total_deposit_paket_kelas,
                 ]);
             }else{
@@ -143,7 +143,7 @@ class TransaksiDepositPaketKelasController extends Controller
                         'id_member'=> $id_member,
                         'id_promo' => $id_promo,
                         'id_kelas' => $id_kelas,
-                        'tanggal_deposit_paket_kelas' => date('Y-m-d H:i:s', strtotime('now')),
+                        'tanggal_deposit_paket_kelas' => date('Y-m-d H:i', strtotime('now')),
                         'nominal_deposit_paket_kelas' => $nominal_deposit_paket_kelas,
                         'nominal_uang_deposit_paket_kelas' => $nominal_uang_deposit_paket_kelas,
                         'bonus_deposit_paket_kelas' => $bonus_deposit_paket_kelas,
@@ -177,7 +177,7 @@ class TransaksiDepositPaketKelasController extends Controller
                     // }
                     return response([
                         'message'=> 'Transaksi Deposit Paket Kelas Berhasil',
-                        'data' => ['transaksi_deposit_paket_kelas' => $transaksipaketkelas, 'deposit_kelas' => $depositKelas, 'sisa_deposit_kelas' => $depositKelas->sisa_deposit_kelas, 'nomor_struk_transaksi_deposit_paket_kelas' => TransaksiDepositPaketKelas::latest()->first()->nomor_struk_transaksi_deposit_paket_kelas, 'nama_member' => $member->nama_member, 'nomor_member' => $member->nomor_member, 'nama_pegawai' => $pegawai->nama_pegawai],
+                        'data' => ['transaksi_deposit_paket_kelas' => $transaksipaketkelas, 'deposit_kelas' => $depositKelas, 'sisa_deposit_kelas' => $depositKelas->sisa_deposit_kelas, 'nomor_struk_transaksi_deposit_paket_kelas' => TransaksiDepositPaketKelas::latest()->first()->nomor_struk_transaksi_deposit_paket_kelas, 'nama_member' => $member->nama_member, 'nomor_member' => $member->nomor_member, 'nama_pegawai' => $pegawai->nama_pegawai, 'harga_kelas' => $kelas->harga_kelas, 'nama_kelas' => $kelas->nama_kelas, 'deskripsi_promo' => $promo->deskripsi_promo],
                         'total' => $total_deposit_paket_kelas,
                     ]);
                 }else{

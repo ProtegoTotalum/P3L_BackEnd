@@ -24,6 +24,7 @@ return new class extends Migration
             $table->dateTime('tanggal_booking_kelas');
             $table->string('metode_pembayaran_booking_kelas');
             $table->time('jam_presensi_kelas')->nullable();
+            $table->string('status_presensi_kelas')->nullable();
             $table->timestamps();
         });
     }

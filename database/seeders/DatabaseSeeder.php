@@ -160,24 +160,140 @@ class DatabaseSeeder extends Seeder
 
         $instruktur3->id_user = $user->id;
         $instruktur3->save();
+
+        $instruktur4 = Instruktur::create([
+            'nama_instruktur' => 'Jess',
+            'email_instruktur' => 'jess@gmail.com',
+            'nomor_telepon_instruktur' => '123987456',
+            'username_instruktur' => 'jess',
+            'password_instruktur' => 'jess',
+            'jumlah_keterlambatan_instruktur' => '0'
+        ]);  
+
+        $user = new User();
+        $user->id_user_login = $instruktur4->id;
+        $user->name = $instruktur4->nama_instruktur;
+        $user->email = $instruktur4->email_instruktur;
+        $user->username = $instruktur4->username_instruktur;
+        $user->password = $instruktur4->password_instruktur;
+        $user->role = 'instruktur';
+        $user->password = bcrypt($instruktur4->password_instruktur);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $instruktur4->id_user = $user->id;
+        $instruktur4->save();
+
+        $instruktur5 = Instruktur::create([
+            'nama_instruktur' => 'Hoon',
+            'email_instruktur' => 'hoon@gmail.com',
+            'nomor_telepon_instruktur' => '456654123',
+            'username_instruktur' => 'hoon',
+            'password_instruktur' => 'hoon',
+            'jumlah_keterlambatan_instruktur' => '0'
+        ]);  
+
+        $user = new User();
+        $user->id_user_login = $instruktur5->id;
+        $user->name = $instruktur5->nama_instruktur;
+        $user->email = $instruktur5->email_instruktur;
+        $user->username = $instruktur5->username_instruktur;
+        $user->password = $instruktur5->password_instruktur;
+        $user->role = 'instruktur';
+        $user->password = bcrypt($instruktur5->password_instruktur);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $instruktur5->id_user = $user->id;
+        $instruktur5->save();
+
+        $instruktur6 = Instruktur::create([
+            'nama_instruktur' => 'Jenny',
+            'email_instruktur' => 'jenny@gmail.com',
+            'nomor_telepon_instruktur' => '0123789123',
+            'username_instruktur' => 'jenny',
+            'password_instruktur' => 'jenny',
+            'jumlah_keterlambatan_instruktur' => '0'
+        ]);  
+
+        $user = new User();
+        $user->id_user_login = $instruktur6->id;
+        $user->name = $instruktur6->nama_instruktur;
+        $user->email = $instruktur6->email_instruktur;
+        $user->username = $instruktur6->username_instruktur;
+        $user->password = $instruktur6->password_instruktur;
+        $user->role = 'instruktur';
+        $user->password = bcrypt($instruktur6->password_instruktur);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $instruktur6->id_user = $user->id;
+        $instruktur6->save();
+
+        $instruktur7 = Instruktur::create([
+            'nama_instruktur' => 'Kevin',
+            'email_instruktur' => 'kevin@gmail.com',
+            'nomor_telepon_instruktur' => '0123987564',
+            'username_instruktur' => 'kevin',
+            'password_instruktur' => 'kevin',
+            'jumlah_keterlambatan_instruktur' => '0'
+        ]);  
+
+        $user = new User();
+        $user->id_user_login = $instruktur7->id;
+        $user->name = $instruktur7->nama_instruktur;
+        $user->email = $instruktur7->email_instruktur;
+        $user->username = $instruktur7->username_instruktur;
+        $user->password = $instruktur7->password_instruktur;
+        $user->role = 'instruktur';
+        $user->password = bcrypt($instruktur7->password_instruktur);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $instruktur7->id_user = $user->id;
+        $instruktur7->save();
         
         Kelas::create([
             'nama_kelas' => 'Pilates',
-            'harga_kelas' => '150000',
+            'harga_kelas' => '200000',
             'kapasitas_kelas' => '10',
         ]);     
 
         Kelas::create([
             'nama_kelas' => 'Yoga',
-            'harga_kelas' => '100000',
+            'harga_kelas' => '150000',
             'kapasitas_kelas' => '10',
         ]);    
 
         Kelas::create([
             'nama_kelas' => 'Wall Swing',
+            'harga_kelas' => '250000',
+            'kapasitas_kelas' => '10',
+        ]);
+
+        Kelas::create([
+            'nama_kelas' => 'Basic Swing',
+            'harga_kelas' => '100000',
+            'kapasitas_kelas' => '10',
+        ]); 
+        
+        Kelas::create([
+            'nama_kelas' => 'Zumba',
             'harga_kelas' => '150000',
             'kapasitas_kelas' => '10',
-        ]);    
+        ]);  
+
+        Kelas::create([
+            'nama_kelas' => 'Spine Corrector',
+            'harga_kelas' => '150000',
+            'kapasitas_kelas' => '10',
+        ]);
+         
+        Kelas::create([
+            'nama_kelas' => 'Muaythai',
+            'harga_kelas' => '150000',
+            'kapasitas_kelas' => '10',
+        ]);  
         
         Promo::create([
             'jenis_promo' => 'Reguler',
@@ -188,14 +304,14 @@ class DatabaseSeeder extends Seeder
 
         Promo::create([
             'jenis_promo' => 'Paket 5 Kelas',
-            'deskripsi_promo' => 'Bayar 5 kelas, gratis 1 kelas. Berlaku 1 bulan sejak pembayaran.',
+            'deskripsi_promo' => 'Bayar 5, gratis 1',
             'minimal_deposit' => '5',
             'bonus_deposit' => '1',
         ]);
 
         Promo::create([
             'jenis_promo' => 'Paket 10 Kelas',
-            'deskripsi_promo' => 'Bayar 10 kelas, gratis 3 kelas. Berlaku 2 bulan sejak pembayaran.',
+            'deskripsi_promo' => 'Bayar 10, gratis 3',
             'minimal_deposit' => '10',
             'bonus_deposit' => '3',
         ]);
@@ -278,6 +394,58 @@ class DatabaseSeeder extends Seeder
         $member3->id_user = $user->id;
         $member3->save();
 
+        $member4 = Member::create([
+            'nama_member' => 'Phoenix',
+            'email_member' => 'phoenix@gmail.com',
+            'nomor_telepon_member' => '456456456',
+            'tanggal_lahir_member' => '08-06-1990',
+            'alamat_member' => 'Jl. Jenderal Sudirman',
+            'sisa_deposit_reguler' => '0',
+            'status_member' => 'Tidak Aktif',
+            'username_member' => 'phoenix',
+            'password_member' => 'phoenix',
+        ]);  
+
+        $user = new User();
+        $user->id_user_login = $member4->id;
+        $user->name = $member4->nama_member;
+        $user->email = $member4->email_member;
+        $user->username = $member4->username_member;
+        $user->password = $member4->password_member;
+        $user->role = 'member';
+        $user->password = bcrypt($member4->password_member);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $member4->id_user = $user->id;
+        $member4->save();
+
+        $member5 = Member::create([
+            'nama_member' => 'Omen',
+            'email_member' => 'omen@gmail.com',
+            'nomor_telepon_member' => '098321765',
+            'tanggal_lahir_member' => '29-03-1983',
+            'alamat_member' => 'Jl. Protocol 5',
+            'sisa_deposit_reguler' => '0',
+            'status_member' => 'Tidak Aktif',
+            'username_member' => 'omen',
+            'password_member' => 'omen',
+        ]);  
+
+        $user = new User();
+        $user->id_user_login = $member5->id;
+        $user->name = $member5->nama_member;
+        $user->email = $member5->email_member;
+        $user->username = $member5->username_member;
+        $user->password = $member5->password_member;
+        $user->role = 'member';
+        $user->password = bcrypt($member5->password_member);
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        $member5->id_user = $user->id;
+        $member5->save();
+
         JadwalUmum::create([
             'id_instruktur' => '1',
             'id_kelas' => '3',
@@ -288,15 +456,8 @@ class DatabaseSeeder extends Seeder
         JadwalUmum::create([
             'id_instruktur' => '1',
             'id_kelas' => '3',
-            'hari' => 'Minggu',
+            'hari' => 'Kamis',
             'jam' => '15:00',
-            ],
-        );
-        JadwalUmum::create([
-            'id_instruktur' => '2',
-            'id_kelas' => '1',
-            'hari' => 'Rabu',
-            'jam' => '17:00',
             ],
         );
         JadwalUmum::create([
@@ -307,24 +468,87 @@ class DatabaseSeeder extends Seeder
             ],
         );
         JadwalUmum::create([
+            'id_instruktur' => '2',
+            'id_kelas' => '1',
+            'hari' => 'Minggu',
+            'jam' => '09:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '3',
+            'id_kelas' => '2',
+            'hari' => 'Selasa',
+            'jam' => '10:00',
+            ],
+        );
+        JadwalUmum::create([
             'id_instruktur' => '3',
             'id_kelas' => '2',
             'hari' => 'Jumat',
-            'jam' => '12:00',
+            'jam' => '13:00',
             ],
         );
         JadwalUmum::create([
             'id_instruktur' => '3',
             'id_kelas' => '2',
-            'hari' => 'Sabtu',
-            'jam' => '08:00',
+            'hari' => 'Minggu',
+            'jam' => '10:00',
             ],
         );
         JadwalUmum::create([
-            'id_instruktur' => '3',
-            'id_kelas' => '2',
-            'hari' => 'Sabtu',
+            'id_instruktur' => '4',
+            'id_kelas' => '6',
+            'hari' => 'Kamis',
+            'jam' => '10:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '5',
+            'id_kelas' => '4',
+            'hari' => 'Selasa',
             'jam' => '14:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '5',
+            'id_kelas' => '4',
+            'hari' => 'Jumat',
+            'jam' => '15:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '6',
+            'id_kelas' => '5',
+            'hari' => 'Kamis',
+            'jam' => '09:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '6',
+            'id_kelas' => '5',
+            'hari' => 'Sabtu',
+            'jam' => '09:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '7',
+            'id_kelas' => '7',
+            'hari' => 'Senin',
+            'jam' => '17:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '7',
+            'id_kelas' => '7',
+            'hari' => 'Rabu',
+            'jam' => '17:00',
+            ],
+        );
+        JadwalUmum::create([
+            'id_instruktur' => '7',
+            'id_kelas' => '7',
+            'hari' => 'Jumat',
+            'jam' => '17:00',
             ],
         );
     }

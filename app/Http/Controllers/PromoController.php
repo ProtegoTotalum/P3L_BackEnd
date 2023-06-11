@@ -72,13 +72,14 @@ class PromoController extends Controller
 
     public function show($id)
     {
-        $promo= Promo::find($id);
+        $promoIds = explode(',', $id);
+        $promo= Promo::whereIn('id', $promoIds)->get();
 
-        if(!is_null($promo)){
+        if($promo->count() > 0){
             return response([
                 'message' => 'Data Promo Ditemukan',
                 'data' => $promo
-            ], 404);
+            ], 200);
         }
 
         return response([

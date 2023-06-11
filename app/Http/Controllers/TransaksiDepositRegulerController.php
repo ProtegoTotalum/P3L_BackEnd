@@ -65,7 +65,7 @@ class TransaksiDepositRegulerController extends Controller
                 'id_pegawai' => $request->id_pegawai,
                 'id_member'=> $request->id_member,
                 'id_promo' => $id_promo,
-                'tanggal_deposit_reguler' => date('Y-m-d H:i:s', strtotime('now')),
+                'tanggal_deposit_reguler' => date('Y-m-d H:i', strtotime('now')),
                 'nominal_deposit_reguler' => $nominal_deposit_reguler,
                 'bonus_deposit_reguler' => $bonus_deposit_reguler,
                 'total_deposit_reguler' =>   $total_deposit_reguler,

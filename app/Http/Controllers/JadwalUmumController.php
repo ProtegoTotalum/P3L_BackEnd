@@ -37,14 +37,26 @@ class JadwalUmumController extends Controller
         if($validator->fails()) {
             return response(['message' => $validator->errors()], 400);
         }
-        $jadwalUmum = JadwalUmum::create([ 
-            'id_instruktur' => $request->id_instruktur,
-            'id_kelas' => $request->id_kelas, 
-            'hari' => $request->hari,
-            'jam' => $request->jam,
-        ]);
+        $cek = JadwalUmum::join('instrukturs','jadwal_umums.id_instruktur', '=', 'instrukturs.id')
+            ->where('instrukturs.id', $request->id_instruktur)
+            ->where('jadwal_umums.hari', $request->hari)
+            ->where('jadwal_umums.jam', $request->jam)
+            ->value('jadwal_umums.id');
 
-        return new JadwalUmumResource(true, 'Data Jadwal Umum Berhasil Ditambahkan!', $jadwalUmum);
+        if(is_null($cek)){
+            $jadwalUmum = JadwalUmum::create([ 
+                'id_instruktur' => $request->id_instruktur,
+                'id_kelas' => $request->id_kelas, 
+                'hari' => $request->hari,
+                'jam' => $request->jam,
+            ]);
+
+            return new JadwalUmumResource(true, 'Data Jadwal Umum Berhasil Ditambahkan!', $jadwalUmum);
+        }else{
+            return response(
+                ['message'=> 'Jadwal Instruktur Bertabrakan'] , 400);
+        }
+
     }
 
     public function destroy($id)
@@ -98,15 +110,25 @@ class JadwalUmumController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+        $cek = JadwalUmum::join('instrukturs','jadwal_umums.id_instruktur', '=', 'instrukturs.id')
+        ->where('instrukturs.id', $request->id_instruktur)
+        ->where('jadwal_umums.hari', $request->hari)
+        ->where('jadwal_umums.jam', $request->jam)
+        ->value('jadwal_umums.id');
 
-        $jadwalUmum = JadwalUmum::find($id);
-        $jadwalUmum->update([
-            'id_instruktur' => $request->id_instruktur,
-            'id_kelas' => $request->id_kelas, 
-            'hari' => $request->hari,
-            'jam' => $request->jam,
-        ]);
-        // alihkan halaman ke halaman departemen
-        return new JadwalUmumResource(true, 'Data Jadwal Umum Berhasil Diupdate!', $jadwalUmum);
+        if(is_null($cek)){
+            $jadwalUmum = JadwalUmum::find($id);
+            $jadwalUmum->update([
+                'id_instruktur' => $request->id_instruktur,
+                'id_kelas' => $request->id_kelas, 
+                'hari' => $request->hari,
+                'jam' => $request->jam,
+            ]);
+            // alihkan halaman ke halaman departemen
+            return new JadwalUmumResource(true, 'Data Jadwal Umum Berhasil Diupdate!', $jadwalUmum);
+        }else{
+            return response(
+                ['message'=> 'Jadwal Instruktur Bertabrakan'] , 400);
+        }
     }
 }

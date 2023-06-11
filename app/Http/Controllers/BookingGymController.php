@@ -28,8 +28,9 @@ class BookingGymController extends Controller
             'booking_gyms.tanggal_booking_gym as tanggal_booking_gym',
             'booking_gyms.tanggal_pelaksanaan_gym as tanggal_pelaksanaan_gym',
             'booking_gyms.jam_sesi_booking_gym as jam_sesi_booking_gym',
-            'booking_gyms.kapasitas_gym as kapasitas-gym',
+            'booking_gyms.kapasitas_gym as kapasitas_gym',
             'booking_gyms.jam_presensi_gym as jam_presensi_gym',
+            'booking_gyms.status_presensi_gym as status_presensi_gym'
         )
         ->get();
         if(count($bookgym) > 0){
@@ -153,4 +154,32 @@ class BookingGymController extends Controller
             
     //     return $kapasitasGym >= 10;
     // }
+
+    public function getHistoryBookingGym($id_member){
+        $bookgym = DB::table('booking_gyms')
+        ->join('members', 'booking_gyms.id_member', '=', 'members.id')
+        ->select(
+            'booking_gyms.nomor_booking_gym as nomor_booking_gym',
+            'booking_gyms.id_member as id_member',
+            'members.nomor_member as nomor_member',
+            'members.nama_member as nama_member',
+            'booking_gyms.tanggal_booking_gym as tanggal_booking_gym',
+            'booking_gyms.tanggal_pelaksanaan_gym as tanggal_pelaksanaan_gym',
+            'booking_gyms.jam_sesi_booking_gym as jam_sesi_booking_gym',
+            'booking_gyms.kapasitas_gym as kapasitas_gym',
+            'booking_gyms.jam_presensi_gym as jam_presensi_gym',
+            'booking_gyms.status_presensi_gym as status_presensi_gym'
+        )
+        ->where('booking_gyms.id_member', '=', $id_member)
+        ->get();
+        if(count($bookgym) > 0){
+            return new BookingGymResource(true, 'List Data Booking Gym',
+            $bookgym); // return data semua booking gym dalam bentuk json
+        }
+
+        return response([
+            'message' => 'Empty',
+            'data' => null
+        ], 400); // return message data booking gym kosong
+    }
 }

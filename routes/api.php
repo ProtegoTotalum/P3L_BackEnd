@@ -33,9 +33,14 @@ Route::get('getpresensi', 'App\Http\Controllers\PresensiInstrukturController@ind
 Route::get('getjadwalharian', 'App\Http\Controllers\JadwalHarianController@index');
 Route::get('getmember/{id}', 'App\Http\Controllers\MemberController@show');
 Route::get('getinstruktur/{id}', 'App\Http\Controllers\InstrukturController@show');
+Route::get('getinstruktur', 'App\Http\Controllers\InstrukturController@index');
 Route::get('getdepositkelas/{id}', 'App\Http\Controllers\DepositKelasController@show');
 Route::get('/jammulai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamMulai']);
 Route::get('/jamselesai/{id}', [App\Http\Controllers\PresensiInstrukturController::class, 'jamSelesai']);
+Route::get('/presensitoday', [App\Http\Controllers\PresensiInstrukturController::class, 'getPresensiToday']);
+Route::get('/getijininstruktur/{id}', [App\Http\Controllers\IjinInstrukturController::class, 'getIjinInstruktur']);
+Route::get('/gethistorybookingkelas/{id}', [App\Http\Controllers\BookingKelasController::class, 'getHistoryBookingKelas']);
+Route::get('/gethistorybookinggym/{id}', [App\Http\Controllers\BookingGymController::class, 'getHistoryBookingGym']);
 
 Route::get('/laporanaktivitasgym',[App\Http\Controllers\LaporanController::class, 'aktivitasGymBulanan']);
 Route::get('/laporanaktivitaskelas',[App\Http\Controllers\LaporanController::class, 'aktivitasKelasBulanan']);

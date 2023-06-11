@@ -18,13 +18,14 @@ class JadwalHarianController extends Controller
         ->join('instrukturs', 'jadwal_umums.id_instruktur', '=', 'instrukturs.id')
         ->join('kelas', 'jadwal_umums.id_kelas', '=', 'kelas.id')
         ->select('jadwal_harians.id as id', 
-        'instrukturs.nama_instruktur as nama_instruktur', 
         'jadwal_harians.tanggal_jadwal_harian as tanggal_jadwal_harian' ,
+        'instrukturs.nama_instruktur as nama_instruktur', 
         'jadwal_harians.status_jadwal_harian as status', 
         'kelas.nama_kelas as nama_kelas',
         'kelas.harga_kelas as harga_kelas', 
         'jadwal_umums.hari as hari', 
         'jadwal_umums.jam as jam')
+        ->orderBy('tanggal_jadwal_harian')
         ->get();
         return new JadwalHarianResource(true, 'Data Jadwal Harian',$harian);
     }

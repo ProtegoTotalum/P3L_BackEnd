@@ -93,10 +93,10 @@ class BookingKelasController extends Controller
                                 'tanggal_booking_kelas' => date('Y-m-d H:i', strtotime('now')),
                                 'metode_pembayaran_booking_kelas' => $metode_pembayaran,
                             ]);
-                            //Update sisa deposit member 
-                            $before = $member->sisa_deposit_reguler;
-                            $member->sisa_deposit_reguler = $before - $kelas->harga_kelas;
-                            $member->save();
+                            // //Update sisa deposit member 
+                            // $before = $member->sisa_deposit_reguler;
+                            // $member->sisa_deposit_reguler = $before - $kelas->harga_kelas;
+                            // $member->save();
                             //Update sisa kapasitas kelas di jadwal harian
                             $min = $harian->kapasitas_kelas - 1;
                             $harian->kapasitas_kelas = $min;
@@ -134,10 +134,10 @@ class BookingKelasController extends Controller
                                     'tanggal_booking_kelas' => date('Y-m-d H:i', strtotime('now')),
                                     'metode_pembayaran_booking_kelas' => $metode_pembayaran,
                                 ]);
-                                //Update sisa deposit kelas member
-                                $minDK = $deposit->sisa_deposit_kelas -1;
-                                $deposit->sisa_deposit_kelas = $minDK;
-                                $deposit->save();
+                                // //Update sisa deposit kelas member
+                                // $minDK = $deposit->sisa_deposit_kelas -1;
+                                // $deposit->sisa_deposit_kelas = $minDK;
+                                // $deposit->save();
                                 //Update sisa kapasitas kelas di jadwal harian
                                 $min = $harian->kapasitas_kelas - 1;
                                 $harian->kapasitas_kelas = $min;
@@ -189,5 +189,49 @@ class BookingKelasController extends Controller
                 'data' => null
             ], 400);
         }
+    }
+
+    public function getHistoryBookingKelas($id_member){
+
+        // $bookkelas = DB::table('booking_kelas')
+        // ->join('members', 'booking_kelas.id_member', '=', 'members.id')
+        // ->join('jadwal_harians', 'booking_kelas.id_jadwal_harian', '=', 'jadwal_harians.id')
+        // ->join('instrukturs', 'jadwal_harians.id_instruktur', '=', 'instrukturs.id')
+        // ->join('deposit_kelas', 'booking_kelas.id_deposit_kelas', '=', 'deposit_kelas.id')
+        // ->join('jadwal_umums', 'jadwal_harians.id_jadwal_umum', '=', 'jadwal_umums.id')
+        // ->join('kelas', 'jadwal_umums.id_kelas', '=', 'kelas.id')
+        // ->select(
+        //     'booking_kelas.nomor_booking_kelas as nomor_booking_kelas',
+        //     'booking_kelas.id_member as id_member',
+        //     'booking_kelas.id_jadwal_harian as id_jadwal_harian',
+        //     'booking_kelas.id_deposit_kelas as id_deposit_kelas',
+        //     'members.nomor_member as nomor_member',
+        //     'members.nama_member as nama_member',
+        //     'instrukturs.nama_instruktur as nama_instruktur',
+        //     'kelas.nama_kelas as nama_kelas',
+        //     'jadwal_harians.tanggal_jadwal_harian as tanggal_jadwal_harian',
+        //     'booking_kelas.tanggal_booking_kelas as tanggal_booking_kelas',
+        //     'booking_kelas.metode_pembayaran_booking_kelas as metode_pembayaran',
+        //     'members.sisa_deposit_reguler as sisa_deposit_reguler',
+        //     'deposit_kelas.sisa_deposit_kelas as sisa_deposit_kelas',
+        //     'deposit_kelas.masa_berlaku_deposit_kelas as masa_berlaku_deposit_kelas',
+        //     'booking_kelas.jam_presensi_kelas as jam_presensi_kelas',
+        // )
+        // ->where('booking_kelas.id_member', '=', $id_member)
+        // ->get();
+
+        $bookkelas = BookingKelas::with(['jadwalharian.jadwalumum.kelas', 'member', 'depositkelas', 'jadwalharian.instruktur'])
+        ->where('booking_kelas.id_member', $id_member)
+        ->get();
+
+        if(count($bookkelas) > 0){
+            return new BookingKelasResource(true, 'List Data Booking Kelas',
+            $bookkelas); // return data semua booking kelas dalam bentuk json
+        }
+
+        return response([
+            'message' => 'Empty',
+            'data' => null
+        ], 400); // return message data booking kelas kosong
     }
 }

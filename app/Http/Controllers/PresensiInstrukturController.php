@@ -203,4 +203,35 @@ class PresensiInstrukturController extends Controller
             'message' => 'Jam Selesai Kelas Berhasil di Update',
         ], 200);
     }
+
+    public function getPresensiToday()
+    {
+        $presensi = DB::table('presensi_instrukturs')
+        ->join('jadwal_harians', 'presensi_instrukturs.id_jadwal_harian', '=', 'jadwal_harians.id')
+        ->join('jadwal_umums', 'jadwal_harians.id_jadwal_umum', '=', 'jadwal_umums.id')
+        ->join('kelas', 'jadwal_umums.id_kelas', '=', 'kelas.id')
+        ->join('instrukturs', 'presensi_instrukturs.id_instruktur', '=', 'instrukturs.id')
+        ->select(
+            'presensi_instrukturs.id as id_presensi',
+            'presensi_instrukturs.id_instruktur as id_instruktur',
+            'instrukturs.nama_instruktur as nama_instruktur',
+            'jadwal_harians.id as id_jadwal_harian',
+            'jadwal_harians.tanggal_jadwal_harian as tanggal_jadwal_harian',
+            'kelas.nama_kelas as nama_kelas',
+            'presensi_instrukturs.jam_mulai_kelas as jam_mulai',
+            'presensi_instrukturs.jam_selesai_kelas as jam_selesai',
+            'presensi_instrukturs.status_presensi as status_presensi'
+        )
+        ->where('jadwal_harians.tanggal_jadwal_harian', '=', date('Y-m-d'))
+        ->get();
+        if(count($presensi) > 0){
+            return new PresensiInstrukturResource(true, 'List Data Presensi Instruktur',
+            $presensi); // return data semua presensi instruktur dalam bentuk json
+        }
+
+        return response([
+            'message' => 'Empty',
+            'data' => null
+        ], 400); // return message data presensi instruktur kosong
+    }
 }
