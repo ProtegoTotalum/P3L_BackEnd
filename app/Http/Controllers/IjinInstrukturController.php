@@ -86,7 +86,6 @@ class IjinInstrukturController extends Controller
 
                 $presensi_instruktur->update([
                     'id_instruktur' => $ijin->id_instruktur_pengganti,
-                    'status_presensi' => "Ijin"
                 ]);
                 
                 return new IjinInstrukturResource(true, 'Ijin Instruktur Sudah Dikonfirmasi', $ijin);

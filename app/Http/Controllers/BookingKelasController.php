@@ -11,6 +11,7 @@ use App\Models\Instruktur;
 use App\Models\DepositKelas;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\BookingKelasResource;
+use App\Models\PresensiInstruktur;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Carbon\Carbon;
@@ -233,5 +234,147 @@ class BookingKelasController extends Controller
             'message' => 'Empty',
             'data' => null
         ], 400); // return message data booking kelas kosong
+    }
+
+    public function showPresensiKelas($id_instruktur){
+
+        $today = date('Y-m-d');
+        $harianToday = JadwalHarian::where('tanggal_jadwal_harian', $today)
+        ->pluck('jadwal_harians.id');
+
+        $cekjadwalIns = PresensiInstruktur::where('id_instruktur', $id_instruktur)
+        ->whereIn('id_jadwal_harian', $harianToday)
+        ->value('presensi_instrukturs.id');
+
+        if(is_null($cekjadwalIns)){
+            return response(
+                ['message'=> 'Hari Ini Instruktur Tidak Ada Jadwal',] , 400);
+        }else{
+            $presensiIns = PresensiInstruktur::where('id_instruktur', $id_instruktur)
+            ->whereIn('id_jadwal_harian', $harianToday)
+            ->whereNotNull('jam_mulai_kelas')
+            ->value('presensi_instrukturs.id');
+            if(is_null($presensiIns)){
+                return response(
+                    ['message'=> 'Instruktur Belum di Presensi',] , 400);
+            }else{
+                $harian = PresensiInstruktur::where('id_instruktur', $id_instruktur)
+                ->whereNotNull('jam_mulai_kelas')
+                ->value('presensi_instrukturs.id_jadwal_harian');
+    
+                $bookkelas = BookingKelas::with(['jadwalharian.jadwalumum.kelas', 'member', 'depositkelas', 'jadwalharian.instruktur'])
+                ->where('booking_kelas.id_jadwal_harian', $harian)
+                ->get();
+        
+                if(count($bookkelas) > 0){
+                    return new BookingKelasResource(true, 'List Data Booking Kelas',
+                    $bookkelas); // return data semua booking kelas dalam bentuk json
+                }
+        
+                return response([
+                    'message' => 'Empty',
+                    'data' => null
+                ], 400); // return message data booking kelas kosong
+    
+            }
+        }
+
+        
+    }
+
+    public function presensiMemberKelasHadir($id){
+        $bookkelas = BookingKelas::find($id);
+        $harian = JadwalHarian::find($bookkelas->id_jadwal_harian);
+        $id_kelas = JadwalHarian::join('jadwal_umums', 'jadwal_harians.id_jadwal_umum', '=', 'jadwal_umums.id')
+            ->join('kelas', 'jadwal_umums.id_kelas', '=', 'kelas.id')
+            ->where('jadwal_harians.id', $harian->id)
+            ->value('jadwal_umums.id_kelas');
+        if(is_null($id_kelas)){
+            return response(
+                ['message'=> 'Kelas Not Found',] , 400);
+        }
+        $kelas = Kelas::find($id_kelas);
+        if($bookkelas->metode_pembayaran_booking_kelas == "Reguler"){
+            $member = Member::find($bookkelas->id_member);
+            //Update sisa deposit member 
+            $before = $member->sisa_deposit_reguler;
+            $member->sisa_deposit_reguler = $before - $kelas->harga_kelas;
+            $member->save();
+            $bookkelas->jam_presensi_kelas = date('H:i:s', strtotime('now'));
+            $bookkelas->status_presensi_kelas = "Hadir";
+            $bookkelas->update();
+            return response([
+                'success' => true,
+                'message' => 'Berhasil Presensi Member',
+            ], 200);
+        }else{
+            $deposit = DepositKelas::find($bookkelas->id_deposit_kelas);
+            //Update sisa deposit kelas member
+            $minDK = $deposit->sisa_deposit_kelas -1;
+            $deposit->sisa_deposit_kelas = $minDK;
+            $deposit->save();
+            $bookkelas->jam_presensi_kelas = date('H:i:s', strtotime('now'));
+            $bookkelas->status_presensi_kelas = "Hadir";
+            $bookkelas->update();
+            return response([
+                'success' => true,
+                'message' => 'Berhasil Presensi Member',
+            ], 200);
+        }
+    }
+
+    public function presensiMemberKelasTidakHadir($id){
+        $bookkelas = BookingKelas::find($id);
+        $harian = JadwalHarian::find($bookkelas->id_jadwal_harian);
+        $id_kelas = JadwalHarian::join('jadwal_umums', 'jadwal_harians.id_jadwal_umum', '=', 'jadwal_umums.id')
+            ->join('kelas', 'jadwal_umums.id_kelas', '=', 'kelas.id')
+            ->where('jadwal_harians.id', $harian->id)
+            ->value('jadwal_umums.id_kelas');
+        if(is_null($id_kelas)){
+            return response(
+                ['message'=> 'Kelas Not Found',] , 400);
+        }
+        $kelas = Kelas::find($id_kelas);
+        if($bookkelas->metode_pembayaran_booking_kelas == "Reguler"){
+            $member = Member::find($bookkelas->id_member);
+            //Update sisa deposit member 
+            $before = $member->sisa_deposit_reguler;
+            $member->sisa_deposit_reguler = $before - $kelas->harga_kelas;
+            $member->save();
+            $bookkelas->status_presensi_kelas = "Tidak Hadir";
+            $bookkelas->update();
+            return response([
+                'success' => true,
+                'message' => 'Berhasil Presensi Member',
+            ], 200);
+        }else{
+            $deposit = DepositKelas::find($bookkelas->id_deposit_kelas);
+            //Update sisa deposit kelas member
+            $minDK = $deposit->sisa_deposit_kelas -1;
+            $deposit->sisa_deposit_kelas = $minDK;
+            $deposit->save();
+            $bookkelas->status_presensi_kelas = "Tidak Hadir";
+            $bookkelas->update();
+            return response([
+                'success' => true,
+                'message' => 'Berhasil Presensi Member',
+            ], 200);
+        }
+    }
+
+    public function getDataDetailBookingKelas($id){
+        $bookkelas = BookingKelas::with(['jadwalharian.jadwalumum.kelas', 'member', 'depositkelas', 'jadwalharian.instruktur'])
+        ->where('booking_kelas.nomor_booking_kelas', $id)
+        ->get();
+
+        if(is_null($bookkelas)){
+            return response([
+                'message' => 'Empty',
+                'data' => null
+            ], 400); // return message data booking kelas kosong
+        }else{
+            return new BookingKelasResource(true, 'List Data Booking Kelas',
+            $bookkelas); // return data semua booking kelas dalam bentuk json
+        }
     }
 }

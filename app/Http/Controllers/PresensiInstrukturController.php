@@ -183,9 +183,14 @@ class PresensiInstrukturController extends Controller
             $telat = $instruktur->jumlah_keterlambatan_instruktur + 1;
             $instruktur->jumlah_keterlambatan_instruktur = $telat;
             $instruktur->save();
+            $presensi->jam_mulai_kelas = $jam;
+            $presensi->status_presensi = "Masuk dan Terlambat";
+            $presensi->update();
+        }else{
+            $presensi->jam_mulai_kelas = $jam;
+            $presensi->status_presensi = "Masuk";
+            $presensi->update();
         }
-        $presensi->jam_mulai_kelas = $jam;
-        $presensi->update();
         return response([
             'success' => true,
             'message' => 'Jam Mulai Kelas Berhasil di Update',
@@ -196,7 +201,6 @@ class PresensiInstrukturController extends Controller
     {
         $presensi = PresensiInstruktur::find($id);
         $presensi->jam_selesai_kelas = date('H:i', strtotime('now'));
-        $presensi->status_presensi = "Masuk";
         $presensi->update();
         return response([
             'success' => true,

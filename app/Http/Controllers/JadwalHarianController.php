@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\JadwalHarianResource;
 use App\Models\JadwalHarian;
+use App\Models\PresensiInstruktur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon; 
@@ -82,6 +83,13 @@ class JadwalHarianController extends Controller
         $jadwal_harian = JadwalHarian::find($id_jadwal_harian);
         $jadwal_harian->status_jadwal_harian = 'Libur';
         $jadwal_harian->update();
+
+        $presensi = PresensiInstruktur::where('id_jadwal_harian', $jadwal_harian->id)
+        ->get();
+        foreach ($presensi as $presensiItem) {
+            $presensiItem->status_presensi = "Libur";
+            $presensiItem->save();
+        }
         return response()->json(['message' => 'Jadwal Harian Berhasil Diliburkan'], 200);
     }
 }

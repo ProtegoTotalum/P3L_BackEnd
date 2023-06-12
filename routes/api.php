@@ -41,6 +41,10 @@ Route::get('/presensitoday', [App\Http\Controllers\PresensiInstrukturController:
 Route::get('/getijininstruktur/{id}', [App\Http\Controllers\IjinInstrukturController::class, 'getIjinInstruktur']);
 Route::get('/gethistorybookingkelas/{id}', [App\Http\Controllers\BookingKelasController::class, 'getHistoryBookingKelas']);
 Route::get('/gethistorybookinggym/{id}', [App\Http\Controllers\BookingGymController::class, 'getHistoryBookingGym']);
+Route::get('/showpresensikelas/{id}', [App\Http\Controllers\BookingKelasController::class, 'showPresensiKelas']);
+Route::get('/presensimemberkelashadir/{id}', [App\Http\Controllers\BookingKelasController::class, 'presensiMemberKelasHadir']);
+Route::get('/presensimemberkelastidakhadir/{id}', [App\Http\Controllers\BookingKelasController::class, 'presensiMemberKelasTidakHadir']);
+Route::get('/getdatadetailbookingkelas/{id}', [App\Http\Controllers\BookingKelasController::class, 'getDataDetailBookingKelas']);
 
 Route::get('/laporanaktivitasgym',[App\Http\Controllers\LaporanController::class, 'aktivitasGymBulanan']);
 Route::get('/laporanaktivitaskelas',[App\Http\Controllers\LaporanController::class, 'aktivitasKelasBulanan']);
